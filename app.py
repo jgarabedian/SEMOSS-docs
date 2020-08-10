@@ -59,7 +59,7 @@ class Entry(flask_db.Model):
     title = CharField()
     slug = CharField(unique=True)
     description = TextField()
-    params = TextField()
+    inputs = TextField()
     content = TextField()
     published = BooleanField(index=True)
     timestamp = DateTimeField(default=datetime.datetime.now, index=True)
@@ -99,7 +99,7 @@ class Entry(flask_db.Model):
                   .select(FTSEntry.docid)
                   .where(FTSEntry.docid == self.id)
                   .exists())
-        content = '\n'.join((self.title, self.content))
+        content = '\n'.join((self.title, self.content, self.description, self.inputs))
         if exists:
             (FTSEntry
              .update({FTSEntry.content: content})
@@ -198,6 +198,8 @@ def _create_or_edit(entry, template):
         entry.title = request.form.get('title') or ''
         entry.content = request.form.get('content') or ''
         entry.published = request.form.get('published') or False
+        entry.description = request.form.get('description') or ''
+        entry.inputs = request.form.get('inputs') or ''
         if not (entry.title and entry.content):
             flash('Title and Content are required.', 'danger')
         else:
