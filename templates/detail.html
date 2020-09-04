@@ -1,9 +1,5 @@
 {% extends "base.html" %}
 
-{% block content_title %}
-    {{ entry.title }}
-{% endblock %}
-
 {% block extra_header %}
     {% if session.logged_in %}
         <li class="nav-item">
@@ -11,10 +7,17 @@
         </li>
     {% endif %}
 {% endblock %}
+{% block page_nav %}<a class="btn btn-outline-primary" href="/" role="button">Back</a>{% endblock %}
+
+{% block content_title %}
+    {{ entry.title }}
+{% endblock %}
 
 {% block content %}
     <p>Created {{ entry.timestamp.strftime('%m/%d/%Y at %I:%M%p') }}</p>
     <p>Description: {{ entry.description }}</p>
     <p>Inputs: {{ entry.inputs }} </p>
-    <p>Examples: {{ entry.content }}</p>
+    <p>Examples:
+        <pre class="p-3 bg-light"><code class="pd-3">{{ entry.content }}</code></pre>
+    </p>
 {% endblock %}

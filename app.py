@@ -181,7 +181,7 @@ def index():
     if search_query:
         query = Entry.search(search_query)
     else:
-        query = Entry.public().order_by(Entry.timestamp.desc())
+        query = Entry.public().order_by(Entry.title.asc())
 
     # The `object_list` helper will take a base query and then handle
     # paginating the results if there are more than 20. For more info see
@@ -264,7 +264,7 @@ def not_found(exc):
 
 def main():
     database.create_tables([Entry, FTSEntry], safe=True)
-    app.run(debug=False)
+    app.run(debug=True)
 
 if __name__ == '__main__':
     main()

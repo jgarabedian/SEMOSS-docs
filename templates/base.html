@@ -9,6 +9,16 @@
     <meta name="robots" content="noindex">
     <!--    Bootstrap-->
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150551765-6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-150551765-6');
+    </script>
+
     {% block extra_head %}{% endblock %}
 
     {% block extra_scripts %}{% endblock %}
@@ -22,12 +32,17 @@
           </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://github.com/jgarabedian/SEMOSS-resources" target="_blank">
+                        Helpful Examples
+                    </a>
+                </li>
                 {% if session.logged_in %}
                   <li class="nav-item"><a class="nav-link"  href="{{ url_for('drafts') }}">Drafts</a></li>
                   <li class="nav-item"><a class="nav-link" href="{{ url_for('create') }}">Create Entry</a></li>
                   <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Log out</a></li>
                 {% else %}
-                    <li class="nav-item"><a href="{{ url_for('login') }}">Log In</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Log In</a></li>
                 {% endif %}
                 {% block extra_header %}{% endblock %}
             </ul>
@@ -42,10 +57,13 @@
 <div class="container mt-2">
     {% block page_header %}
         <div class="page-header">
-          <h1>{% block content_title %}{% endblock %}</h1>
+
+          <h1 class="text-primary">{% block content_title %}{% endblock %}</h1>
         </div>
       {% endblock %}
     {% block content %}{% endblock %}
+    <hr>
+    {% block page_nav %}{% endblock %}
 </div>
 
 <!--Bootstrap JS-->
